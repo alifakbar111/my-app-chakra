@@ -38,12 +38,6 @@ const Details = () => {
         </GridItem>
         <GridItem colSpan={1}>
           <FormControl>
-            <FormLabel>City</FormLabel>
-            <Input placeholder="San Francisco" />
-          </FormControl>
-        </GridItem>
-        <GridItem colSpan={1}>
-          <FormControl>
             <FormLabel>Country</FormLabel>
             <Select>
               <option value="usa">United States of America</option>
