@@ -1,4 +1,31 @@
-import { extendTheme, theme as base } from "@chakra-ui/react";
+import { extendTheme, theme as base, withDefaultColorScheme, withDefaultVariant } from "@chakra-ui/react";
+import { mode, StyleFunctionProps } from "@chakra-ui/theme-tools";
+import { Dict } from "@chakra-ui/utils";
+
+const inputSelectStyle = {
+  variants: {
+    filled: {
+      field: {
+        _focus: {
+          borderColor: 'brand.500'
+        }
+      }
+    }
+  },
+  sizes: {
+    md: {
+      field: {
+        borderRadius: 'none'
+      }
+    }
+  }
+}
+const brandRing = {
+  _focus: {
+    ring: 2,
+    ringColor: 'brand.500'
+  }
+}
 
 const theme = extendTheme({
   colors: {
@@ -18,7 +45,44 @@ const theme = extendTheme({
   fonts: {
     heading: `Monserrat, ${base.fonts?.heading}`,
     body: `Inter, ${base.fonts.body}`
+  },
+  components: {
+    Button: {
+      variants: {
+        primary: (props: Object) => ({
+          rounded: 'none',
+          ...brandRing,
+          color: mode('white', 'gray.800')(props),
+          backgroundColor: mode('brand.500', 'brand.200')(props),
+          _hover: {
+            backgroundColor: mode('brand.600', 'brand.300')(props)
+          },
+          _active: {
+            backgroundColor: mode('brand.700', 'brand.400')(props)
+          }
+        })
+      }
+    },
+    Input: { ...inputSelectStyle },
+    Select: { ...inputSelectStyle },
+    Checkbox: {
+      baseStyle: {
+        control: {
+          borderRadius: 'none',
+          ...brandRing
+        }
+      }
+    }
   }
-})
+},
+  withDefaultColorScheme({
+    colorScheme: 'brand',
+    components: ['Checkbox']
+  }),
+  withDefaultVariant({
+    variant: 'filled',
+    components: ['Input', 'Select']
+  })
+)
 
 export default theme;
